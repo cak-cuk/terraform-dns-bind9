@@ -27,7 +27,7 @@ pipeline {
 
         stage("Terraform lint") {
             when { expression { env.GIT_BRANCH != 'main' } }
-            
+
             steps {
               withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'keyserver'), string(credentialsId: 'rndc_key_name', variable: 'keyname')]) {
     // some block
