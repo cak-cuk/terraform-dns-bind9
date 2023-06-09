@@ -27,7 +27,7 @@ pipeline {
               withCredentials([
                 string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_key_secret'),
                 string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_key_algorithm'),
-                string(credentialsId: 'text_rndc_server', variable: 'TF_VAR_server'),
+                string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_server'),
               ]) {
                   sh '''
                   /usr/bin/terraform init
@@ -45,7 +45,7 @@ pipeline {
               withCredentials([
                 string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_key_secret'),
                 string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_key_algorithm'),
-                string(credentialsId: 'text_rndc_server', variable: 'TF_VAR_server'),
+                string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_server'),
               ]) {
                   sh '''
                   /usr/bin/terraform apply -auto-approve
