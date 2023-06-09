@@ -13,7 +13,7 @@ pipeline {
   environment {
     keyname = credentials('rndc_key_name')
     keysecret = credentials('rndc_key_secret')
-    keyalgorithm = credentials('rndc_key_algorithm')
+    keyalgorithm = 'hmac-sha256'
     server = credentials('rndc_key_server')
     TG_LOG="trace"
     TF_LOG_PATH="./terraform.log"
