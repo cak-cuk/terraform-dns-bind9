@@ -11,7 +11,7 @@ provider "dns" {
   update {
     server        = var.server
     key_name      = var.keyname
-    key_algorithm = var.keyalgorithm
+    key_algorithm = 'hmac-sha256'
     key_secret    = var.keysecret
   }
 }
