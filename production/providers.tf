@@ -10,8 +10,8 @@ terraform {
 provider "dns" {
  update {
   server 		= "10.85.202.120"
-  key_name		= env_rndc_key_name
+  key_name		= env.key_name
   key_algorithm = "hmac-md5"
-  key_secret = env.rndc_key_secret
+  key_secret = env.key_secret
  }
 }
