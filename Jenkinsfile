@@ -11,7 +11,12 @@ pipeline {
     timeout(time: 2, unit: "HOURS")
   }
   environment {
-      REPOS = 'cakcuk/ansible'
+    keyname = credentials('rndc_key_name')
+    keysecret = credentials('rndc_key_secret')
+    keyalgorithm = credentials('rndc_key_algorithm')
+    server = credentials('rndc_key_server')
+    TG_LOG=trace
+    TF_LOG_PATH="./terraform.log"
   }
     stages {
         stage("Print environment") {
@@ -22,16 +27,11 @@ pipeline {
 
         stage("Terraform lint") {
             when { expression { env.GIT_BRANCH != 'main' } }
-
+            
             steps {
-              withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_keyserver'), string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_keyname')]) {
+              withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'keyserver'), string(credentialsId: 'rndc_key_name', variable: 'keyname')]) {
     // some block
                 sh '''
-                export TG_LOG=trace
-                export TF_VAR_keysecret= var.RNDC_KEY_SECRET
-                export TF_VAR_keyalgorithm = var.RNDC_KEY_ALGORITHM
-                export TF_VAR_keyname = var.RNDC_KEY_NAME
-                export TF_VARserver = var.RNDC_KEY_SERVER
                 cd ${WORKSPACE}/production
                 /usr/bin/terraform init
                 /usr/bin/terraform fmt
@@ -48,10 +48,6 @@ pipeline {
               withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_keyserver'), string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_keyname')]) {
     // some block
                 sh '''
-                export TF_VAR_keysecret= var.RNDC_KEY_SECRET
-                export TF_VAR_keyalgorithm = var.RNDC_KEY_ALGORITHM
-                export TF_VAR_keyname = var.RNDC_KEY_NAME
-                export TF_VAR_server = var.RNDC_KEY_SERVER
                 cd ${WORKSPACE}/production
                 /usr/bin/terraform apply -auto-approve
                   '''
