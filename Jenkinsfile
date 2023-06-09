@@ -33,9 +33,21 @@ pipeline {
     // some block
                 sh '''
                 cd ${WORKSPACE}/production
-                /usr/bin/terraform init
-                /usr/bin/terraform fmt
-                /usr/bin/terraform plan
+                /usr/bin/terraform init \
+                  -var 'keyname${keyname}' \
+                  -var 'keysecret=$(keysecret)' \
+                  -var 'keyalgorithm=$(keyalgorithm)' \
+                  -var 'server=$(server)' 
+                /usr/bin/terraform fmt \
+                  -var 'keyname${keyname}' \
+                  -var 'keysecret=$(keysecret)' \
+                  -var 'keyalgorithm=$(keyalgorithm)' \
+                  -var 'server=$(server)' 
+                /usr/bin/terraform plan \
+                  -var 'keyname${keyname}' \
+                  -var 'keysecret=$(keysecret)' \
+                  -var 'keyalgorithm=$(keyalgorithm)' \
+                  -var 'server=$(server)' 
                   '''
               }
             } // steps
@@ -49,7 +61,11 @@ pipeline {
     // some block
                 sh '''
                 cd ${WORKSPACE}/production
-                /usr/bin/terraform apply -auto-approve
+                /usr/bin/terraform apply -auto-approve \
+                  -var 'keyname${keyname}' \
+                  -var 'keysecret=$(keysecret)' \
+                  -var 'keyalgorithm=$(keyalgorithm)' \
+                  -var 'server=$(server)' 
                   '''
               }
             } // steps
