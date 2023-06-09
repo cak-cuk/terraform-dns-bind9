@@ -13,5 +13,5 @@ provider "dns" {
   key_name		= env_rndc_key_name
   key_algorithm = "hmac-md5"
   key_secret = env.rndc_key_secret
- } 
+ }
 }
