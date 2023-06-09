@@ -9,9 +9,9 @@ terraform {
 
 provider "dns" {
  update {
-  server 		= env.TF_VAR_server
-  key_name		= env.TF_VAR_key_name
-  key_algorithm = env.TF_VAR_key_algorithm
-  key_secret = env.TF_VAR_key_secret
+  server 		= $TF_VAR_server
+  key_name		= $TF_VAR_key_name
+  key_algorithm = $TF_VAR_key_algorithm
+  key_secret = $TF_VAR_key_secret
  }
 }
