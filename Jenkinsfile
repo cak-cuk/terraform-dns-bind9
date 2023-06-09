@@ -24,46 +24,37 @@ pipeline {
             when { expression { env.GIT_BRANCH != 'main' } }
 
             steps {
-              withCredentials([
-                string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_key_secret'),
-                string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_key_algorithm'),
-		string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_key_name'),
-                string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_server'),
-              ]) {
-                  sh '''
-		  export env.TF_VAR_key_secret= env.RNDC_KEY_SECRET
-		  export env.TF_VAR_key_algorithm = env.RNDC_KEY_ALGORITHM
-		  export env.TF_VAR_key_name = env.RNDC_KEY_NAME
-		  export env.TF_VAR_server = env.RNDC_KEY_SERVER
-		  export $
-		  cd ${WORKSPACE}/production
-                  /usr/bin/terraform init
-                  /usr/bin/terraform fmt
-                  /usr/bin/terraform plan
+              withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_keyserver'), string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_keyname')]) {
+    // some block
+                sh '''
+                export env.TF_VAR_keysecret= env.RNDC_KEY_SECRET
+                export env.TF_VAR_keyalgorithm = env.RNDC_KEY_ALGORITHM
+                export env.TF_VAR_keyname = env.RNDC_KEY_NAME
+                export env.TF_VARserver = env.RNDC_KEY_SERVER
+                cd ${WORKSPACE}/production
+                /usr/bin/terraform init
+                /usr/bin/terraform fmt
+                /usr/bin/terraform plan
                   '''
-                } // creds
+              }
             } // steps
         } // stage
 
         stage("Terraform apply") {
-            when { expression { env.GIT_BRANCH != 'main' } }
+            when { expression { env.GIT_BRANCH == 'main' } }
 
             steps {
-              withCredentials([
-                string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_key_secret'),
-                string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_key_algorithm'),
-		string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_key_name'),
-                string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_server'),
-              ]) {
-                  sh '''
-		  export env.TF_VAR_key_secret= env.RNDC_KEY_SECRET
-		  export env.TF_VAR_key_algorithm = env.RNDC_KEY_ALGORITHM
-		  export env.TF_VAR_key_name = env.RNDC_KEY_NAME
-		  export env.TF_VAR_server = env.RNDC_KEY_SERVER
-		  cd ${WORKSPACE}/production
-                  /usr/bin/terraform apply -auto-approve
+              withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_keyserver'), string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_keyname')]) {
+    // some block
+                sh '''
+                export env.TF_VAR_keysecret= env.RNDC_KEY_SECRET
+                export env.TF_VAR_keyalgorithm = env.RNDC_KEY_ALGORITHM
+                export env.TF_VAR_keyname = env.RNDC_KEY_NAME
+                export env.TF_VARserver = env.RNDC_KEY_SERVER
+                cd ${WORKSPACE}/production
+                /usr/bin/terraform apply -auto-approve
                   '''
-                } // creds
+              }
             } // steps
         } // stage
     } // EOL stages
