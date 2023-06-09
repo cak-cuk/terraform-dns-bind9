@@ -1,7 +1,7 @@
 resource "dns_a_record_set" "www" {
-  zone = "dns.lab"
+  zone = "dns.lab."
   name = "www"
-  address = [
+  addresses = [
   "127.0.0.1",
   "127.0.0.53"
  ]

@@ -27,10 +27,11 @@ pipeline {
               withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_keyserver'), string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_keyname')]) {
     // some block
                 sh '''
-                env.TF_VAR_keysecret= env.RNDC_KEY_SECRET
-                env.TF_VAR_keyalgorithm = env.RNDC_KEY_ALGORITHM
-                env.TF_VAR_keyname = env.RNDC_KEY_NAME
-                env.TF_VARserver = env.RNDC_KEY_SERVER
+                export TG_LOG=trace
+                export TF_VAR_keysecret= var.RNDC_KEY_SECRET
+                export TF_VAR_keyalgorithm = var.RNDC_KEY_ALGORITHM
+                export TF_VAR_keyname = var.RNDC_KEY_NAME
+                export TF_VARserver = var.RNDC_KEY_SERVER
                 cd ${WORKSPACE}/production
                 /usr/bin/terraform init
                 /usr/bin/terraform fmt
@@ -47,10 +48,10 @@ pipeline {
               withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_keyserver'), string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_keyname')]) {
     // some block
                 sh '''
-                env.TF_VAR_keysecret= env.RNDC_KEY_SECRET
-                env.TF_VAR_keyalgorithm = env.RNDC_KEY_ALGORITHM
-                env.TF_VAR_keyname = env.RNDC_KEY_NAME
-                env.TF_VAR_server = env.RNDC_KEY_SERVER
+                export TF_VAR_keysecret= var.RNDC_KEY_SECRET
+                export TF_VAR_keyalgorithm = var.RNDC_KEY_ALGORITHM
+                export TF_VAR_keyname = var.RNDC_KEY_NAME
+                export TF_VAR_server = var.RNDC_KEY_SERVER
                 cd ${WORKSPACE}/production
                 /usr/bin/terraform apply -auto-approve
                   '''
