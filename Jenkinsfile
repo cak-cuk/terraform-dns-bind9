@@ -27,10 +27,10 @@ pipeline {
               withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_keyserver'), string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_keyname')]) {
     // some block
                 sh '''
-                export env.TF_VAR_keysecret= env.RNDC_KEY_SECRET
-                export env.TF_VAR_keyalgorithm = env.RNDC_KEY_ALGORITHM
-                export env.TF_VAR_keyname = env.RNDC_KEY_NAME
-                export env.TF_VARserver = env.RNDC_KEY_SERVER
+                env.TF_VAR_keysecret= env.RNDC_KEY_SECRET
+                env.TF_VAR_keyalgorithm = env.RNDC_KEY_ALGORITHM
+                env.TF_VAR_keyname = env.RNDC_KEY_NAME
+                env.TF_VARserver = env.RNDC_KEY_SERVER
                 cd ${WORKSPACE}/production
                 /usr/bin/terraform init
                 /usr/bin/terraform fmt
@@ -47,10 +47,10 @@ pipeline {
               withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_keyserver'), string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_keyname')]) {
     // some block
                 sh '''
-                export env.TF_VAR_keysecret= env.RNDC_KEY_SECRET
-                export env.TF_VAR_keyalgorithm = env.RNDC_KEY_ALGORITHM
-                export env.TF_VAR_keyname = env.RNDC_KEY_NAME
-                export env.TF_VARserver = env.RNDC_KEY_SERVER
+                env.TF_VAR_keysecret= env.RNDC_KEY_SECRET
+                env.TF_VAR_keyalgorithm = env.RNDC_KEY_ALGORITHM
+                env.TF_VAR_keyname = env.RNDC_KEY_NAME
+                env.TF_VARserver = env.RNDC_KEY_SERVER
                 cd ${WORKSPACE}/production
                 /usr/bin/terraform apply -auto-approve
                   '''
