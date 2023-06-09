@@ -34,12 +34,12 @@ pipeline {
                 sh '''
                 cd ${WORKSPACE}/production
                 /usr/bin/terraform init \
-                  -var 'keyname$(keyname)' \
+                  -var 'keyname=$(keyname)' \
                   -var 'keysecret=$(keysecret)' \
                   -var 'keyalgorithm=$(keyalgorithm)' \
                   -var 'server=$(server)'
                 /usr/bin/terraform plan \
-                  -var 'keyname$(keyname)' \
+                  -var 'keyname=$(keyname)' \
                   -var 'keysecret=$(keysecret)' \
                   -var 'keyalgorithm=$(keyalgorithm)' \
                   -var 'server=$(server)'
@@ -57,7 +57,7 @@ pipeline {
                 sh '''
                 cd ${WORKSPACE}/production
                 /usr/bin/terraform apply -auto-approve \
-                  -var 'keyname${keyname}' \
+                  -var 'keyname=$(keyname)' \
                   -var 'keysecret=$(keysecret)' \
                   -var 'keyalgorithm=$(keyalgorithm)' \
                   -var 'server=$(server)'
