@@ -2,7 +2,7 @@
 
 pipeline {
   agent {
-        label 'ubuntu2204'
+        label 'baremetal'
   }
   options {
 	timestamps()
@@ -21,34 +21,35 @@ pipeline {
         }
 
         stage("Ansible and YAML Lint") {
+            when { expression { env.GIT_BRANCH != 'main' } }
+            withCredentials([
+              string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_key_secret'),
+              string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_key_algorithm'),
+              string(credentialsId: 'text_rndc_server', variable: 'TF_VAR_server'),
+            ]) {
             steps {
-							sh '''
-							bash ./scripts/prepare.sh
-							. $HOME/.bashrc
-							export PATH=$HOME/.local/bin:$PATH
-							yamllint -f colored --no-warnings ${WORKSPACE}
-							ansible-lint --exclude "molecule" --force-color -x 106 ${WORKSPACE}
-							'''
-                }
-        }
+                sh '''
+                /usr/bin/terraform init
+                /usr/bin/terraform fmt
+                /usr/bin/terraform plan
+				'''
+                } // steps
+            } // with creds
+        } // stage
 
-
-        stage("Simulate the playbook") {
-            when { expression { env.GIT_BRANCH != 'origin/main' } }
+        stage("Ansible and YAML Lint") {
+            when { expression { env.GIT_BRANCH != 'main' } }
+            withCredentials([
+              string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_key_secret'),
+              string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_key_algorithm'),
+              string(credentialsId: 'text_rndc_server', variable: 'TF_VAR_server'),
+            ]) {
             steps {
-                sh 'echo "do whatever"'
-                }
-        }
-        stage("Run the playbook") {
-            when { expression { env.GIT_BRANCH == 'origin/main' } }
-            steps {
-                sh 'echo "do whatever"'
-                }
-        }
+                sh '''
+                /usr/bin/terraform apply -auto-approve
+				'''
+                } // steps
+            } // with creds
+        } // stage
     } // EOL stages
-  post {
-    always {
-        cleanWs()
-        }
-  } // eol post
 }
