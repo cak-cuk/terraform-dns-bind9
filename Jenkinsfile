@@ -15,7 +15,7 @@ pipeline {
     keysecret = credentials('rndc_key_secret')
     keyalgorithm = credentials('rndc_key_algorithm')
     server = credentials('rndc_key_server')
-    TG_LOG=trace
+    TG_LOG="trace"
     TF_LOG_PATH="./terraform.log"
   }
     stages {
