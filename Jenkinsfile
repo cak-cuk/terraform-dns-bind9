@@ -20,7 +20,7 @@ pipeline {
             }
         }
 
-        stage("Ansible and YAML Lint") {
+        stage("Terraform lint") {
             when { expression { env.GIT_BRANCH != 'main' } }
 
             steps {
@@ -38,7 +38,7 @@ pipeline {
             } // steps
         } // stage
 
-        stage("Ansible and YAML Lint") {
+        stage("Terraform apply") {
             when { expression { env.GIT_BRANCH != 'main' } }
 
             steps {
