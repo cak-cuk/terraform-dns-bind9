@@ -5,7 +5,7 @@ pipeline {
         label 'baremetal'
   }
   options {
-	timestamps()
+    timestamps()
     ansiColor("xterm")
     buildDiscarder(logRotator(numToKeepStr: "100"))
     timeout(time: 2, unit: "HOURS")
@@ -34,12 +34,12 @@ pipeline {
                 sh '''
                 cd ${WORKSPACE}/production
                 /usr/bin/terraform init \
-                  -var 'keyname${keyname}' \
+                  -var 'keyname$(keyname)' \
                   -var 'keysecret=$(keysecret)' \
                   -var 'keyalgorithm=$(keyalgorithm)' \
                   -var 'server=$(server)'
                 /usr/bin/terraform plan \
-                  -var 'keyname${keyname}' \
+                  -var 'keyname$(keyname)' \
                   -var 'keysecret=$(keysecret)' \
                   -var 'keyalgorithm=$(keyalgorithm)' \
                   -var 'server=$(server)'
