@@ -27,10 +27,15 @@ pipeline {
               withCredentials([
                 string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_key_secret'),
                 string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_key_algorithm'),
-		            string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_key_name'),
+		string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_key_name'),
                 string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_server'),
               ]) {
                   sh '''
+		  export env.TF_VAR_key_secret= env.RNDC_KEY_SECRET
+		  export env.TF_VAR_key_algorithm = env.RNDC_KEY_ALGORITHM
+		  export env.TF_VAR_key_name = env.RNDC_KEY_NAME
+		  export env.TF_VAR_server = env.RNDC_KEY_SERVER
+		  export $
 		  cd ${WORKSPACE}/production
                   /usr/bin/terraform init
                   /usr/bin/terraform fmt
@@ -47,10 +52,14 @@ pipeline {
               withCredentials([
                 string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_key_secret'),
                 string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_key_algorithm'),
-		            string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_key_name'),
+		string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_key_name'),
                 string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_server'),
               ]) {
                   sh '''
+		  export env.TF_VAR_key_secret= env.RNDC_KEY_SECRET
+		  export env.TF_VAR_key_algorithm = env.RNDC_KEY_ALGORITHM
+		  export env.TF_VAR_key_name = env.RNDC_KEY_NAME
+		  export env.TF_VAR_server = env.RNDC_KEY_SERVER
 		  cd ${WORKSPACE}/production
                   /usr/bin/terraform apply -auto-approve
                   '''
