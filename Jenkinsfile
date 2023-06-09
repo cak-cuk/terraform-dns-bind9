@@ -30,6 +30,7 @@ pipeline {
                 string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_server'),
               ]) {
                   sh '''
+		  cd ${WORKSPACE}/production
                   /usr/bin/terraform init
                   /usr/bin/terraform fmt
                   /usr/bin/terraform plan
@@ -48,6 +49,7 @@ pipeline {
                 string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_server'),
               ]) {
                   sh '''
+		  cd ${WORKSPACE}/production
                   /usr/bin/terraform apply -auto-approve
                   '''
                 } // creds
