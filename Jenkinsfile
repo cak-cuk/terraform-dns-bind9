@@ -37,17 +37,17 @@ pipeline {
                   -var 'keyname${keyname}' \
                   -var 'keysecret=$(keysecret)' \
                   -var 'keyalgorithm=$(keyalgorithm)' \
-                  -var 'server=$(server)' 
+                  -var 'server=$(server)'
                 /usr/bin/terraform fmt \
                   -var 'keyname${keyname}' \
                   -var 'keysecret=$(keysecret)' \
                   -var 'keyalgorithm=$(keyalgorithm)' \
-                  -var 'server=$(server)' 
+                  -var 'server=$(server)'
                 /usr/bin/terraform plan \
                   -var 'keyname${keyname}' \
                   -var 'keysecret=$(keysecret)' \
                   -var 'keyalgorithm=$(keyalgorithm)' \
-                  -var 'server=$(server)' 
+                  -var 'server=$(server)'
                   '''
               }
             } // steps
@@ -65,7 +65,7 @@ pipeline {
                   -var 'keyname${keyname}' \
                   -var 'keysecret=$(keysecret)' \
                   -var 'keyalgorithm=$(keyalgorithm)' \
-                  -var 'server=$(server)' 
+                  -var 'server=$(server)'
                   '''
               }
             } // steps
