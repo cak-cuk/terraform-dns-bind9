@@ -50,7 +50,7 @@ pipeline {
                 env.TF_VAR_keysecret= env.RNDC_KEY_SECRET
                 env.TF_VAR_keyalgorithm = env.RNDC_KEY_ALGORITHM
                 env.TF_VAR_keyname = env.RNDC_KEY_NAME
-                env.TF_VARserver = env.RNDC_KEY_SERVER
+                env.TF_VAR_server = env.RNDC_KEY_SERVER
                 cd ${WORKSPACE}/production
                 /usr/bin/terraform apply -auto-approve
                   '''
