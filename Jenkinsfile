@@ -27,6 +27,7 @@ pipeline {
               withCredentials([
                 string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_key_secret'),
                 string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_key_algorithm'),
+		string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_key_server'),
                 string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_server'),
               ]) {
                   sh '''
@@ -46,6 +47,7 @@ pipeline {
               withCredentials([
                 string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_key_secret'),
                 string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_key_algorithm'),
+		string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_key_server'),
                 string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_server'),
               ]) {
                   sh '''
