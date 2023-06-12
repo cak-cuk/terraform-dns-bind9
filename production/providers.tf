@@ -10,8 +10,8 @@ terraform {
 provider "dns" {
   update {
     server        = "10.85.202.120"
-    key_name      = "jenkins-key."
+    key_name      = "dnslab01."
     key_algorithm = "hmac-sha256"
-    key_secret    = "Yfr4AfgMgfDS1BUf4dpbua2hSea99spQVnnbvAJfL5g="
+    key_secret    = "dHAy/Xx+ML4PVhefW0Kfvh6osoA8/+KclCKaz5lYYBk="
   }
 }
