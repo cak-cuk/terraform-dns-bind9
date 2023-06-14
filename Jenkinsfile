@@ -11,7 +11,7 @@ pipeline {
     timeout(time: 2, unit: "HOURS")
   }
   environment {
-    TARGET="dns1 dns2" 
+    TARGET="dns1 dns2"
     TG_LOG="trace"
     TF_LOG_PATH="./terraform.log"
   }
