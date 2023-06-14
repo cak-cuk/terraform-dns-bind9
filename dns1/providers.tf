@@ -5,6 +5,10 @@ terraform {
       version = "3.3.2"
     }
   }
+  backend "gcs" {
+    bucket = "terraform-state-lab01"
+    prefix = "terraform/dns1"
+  }
 }
 
 provider "dns" {
