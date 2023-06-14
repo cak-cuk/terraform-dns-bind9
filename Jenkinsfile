@@ -26,9 +26,9 @@ pipeline {
             when { expression { env.GIT_BRANCH != 'main' } }
 
             steps {
-              withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'keyserver'), string(credentialsId: 'rndc_key_name', variable: 'keyname')]) {
-    // some block
+             withCredentials([file(credentialsId: 'GCS-Service-Account', variable: 'GCS_Service_Account')]) {
                 sh '''
+                export GOOGLE_APPLICATION_CREDENTIALS=$GCS_Service_Account
                 for target in $TARGET
                     do
                         cd ${WORKSPACE}/$target
@@ -44,9 +44,9 @@ pipeline {
             when { expression { env.GIT_BRANCH == 'main' } }
 
             steps {
-              withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_keyserver'), string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_keyname')]) {
-    // some block
+             withCredentials([file(credentialsId: 'GCS-Service-Account', variable: 'GCS_Service_Account')]) {
                 sh '''
+                export GOOGLE_APPLICATION_CREDENTIALS=$GCS_Service_Account
                 for target in $TARGET
                     do
                         cd ${WORKSPACE}/$target

@@ -5,11 +5,9 @@ terraform {
       version = "3.3.2"
     }
   }
-  cloud {
-    organization = "mahyuddin"
-    workspaces {
-      name = "jenkins-dns-lab"
-    }
+  backend "gcs" {
+    bucket = "terraform-state-lab01"
+    prefix = "terraform/dns1"
   }
 }
 
