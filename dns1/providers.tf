@@ -5,6 +5,12 @@ terraform {
       version = "3.3.2"
     }
   }
+  cloud {
+    organization = "mahyuddin"
+    workspaces {
+      name = "jenkins-dns-lab"
+    }
+  }
 }
 
 provider "dns" {

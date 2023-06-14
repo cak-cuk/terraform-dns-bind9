@@ -11,10 +11,7 @@ pipeline {
     timeout(time: 2, unit: "HOURS")
   }
   environment {
-    keyname = credentials('rndc_key_name')
-    keysecret = credentials('rndc_key_secret')
-    keyalgorithm = 'hmac-sha256'
-    server = credentials('rndc_key_server')
+    TARGET="dns1 dns2" 
     TG_LOG="trace"
     TF_LOG_PATH="./terraform.log"
   }
@@ -32,9 +29,12 @@ pipeline {
               withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'keyserver'), string(credentialsId: 'rndc_key_name', variable: 'keyname')]) {
     // some block
                 sh '''
-                cd ${WORKSPACE}/production
-                /usr/bin/terraform init
-                /usr/bin/terraform plan
+                for target in $TARGET
+                    do
+                        cd ${WORKSPACE}/$target
+                        /usr/bin/terraform init
+                        /usr/bin/terraform plan
+                    done
                   '''
               }
             } // steps
@@ -47,12 +47,20 @@ pipeline {
               withCredentials([string(credentialsId: 'rndc_key_secret', variable: 'TF_VAR_keysecret'), string(credentialsId: 'rndc_key_algorithm', variable: 'TF_VAR_keyalgorithm'), string(credentialsId: 'rndc_key_server', variable: 'TF_VAR_keyserver'), string(credentialsId: 'rndc_key_name', variable: 'TF_VAR_keyname')]) {
     // some block
                 sh '''
-                cd ${WORKSPACE}/production
-                /usr/bin/terraform init
-                /usr/bin/terraform apply -auto-approve
+                for target in $TARGET
+                    do
+                        cd ${WORKSPACE}/$target
+                        /usr/bin/terraform init
+                        /usr/bin/terraform apply -auto-approve
+                    done
                   '''
               }
             } // steps
         } // stage
     } // EOL stages
+  post {
+    always {
+        cleanWs()
+        }
+  } // eol post
 }
